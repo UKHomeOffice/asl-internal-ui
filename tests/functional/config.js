@@ -3,7 +3,8 @@ require('dotenv/config');
 module.exports = {
   specs: './tests/functional/specs/**/*.js',
   users: {
-    'inspector': 'inspector'
+    'inspector': 'inspector',
+    'holc': 'holc'
   },
   urls: {
     local: 'http://localhost:8080',
