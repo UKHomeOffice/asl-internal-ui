@@ -8,6 +8,12 @@ describe('Smoke tests', () => {
     assert.equal(title, 'Research and Testing with Animals');
   });
 
+  it('can\'t log in', () => {
+    browser.withUser('holc');
+    const title = browser.getText('h1');
+    assert.equal(title, 'Access Denied');
+  });
+
   it('sees the establishments page in the h1', () => {
     browser.withUser('inspector');
     const title = browser.getText('h1');
