@@ -19,7 +19,7 @@ td .govuk-button {
   padding-bottom: 0;
   background-color: $blue;
 
-  h2 {
+  h2, h3 {
     color: $white;
   }
 
@@ -44,6 +44,7 @@ td .govuk-button {
 
       a.active {
         font-weight: bold;
+        text-decoration: none;
       }
     }
   }
