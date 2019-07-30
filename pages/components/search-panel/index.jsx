@@ -8,8 +8,6 @@ class SearchPanel extends Component {
 
     return (
       <div className="search-panel">
-        <h2><Snippet>searchPanel.title</Snippet></h2>
-
         <ul className="search-type">
           { searchableModels.map(model => (
             <li key={model}>
@@ -21,16 +19,8 @@ class SearchPanel extends Component {
         </ul>
 
         <div className="govuk-grid-row">
-          <div className="govuk-grid-column-two-thirds">
+          <div className="govuk-grid-column-full">
             <Search action={this.props.action} name="filter-*" />
-          </div>
-
-          <div className="govuk-grid-column-one-third">
-            <div className="view-all-link">
-              <a href={`/search/${searchType}`}>
-                <Snippet>{`searchPanel.${searchType}.viewAll`}</Snippet>
-              </a>
-            </div>
           </div>
         </div>
       </div>
@@ -39,6 +29,7 @@ class SearchPanel extends Component {
 }
 
 SearchPanel.defaultProps = {
+  showTitle: true,
   searchableModels: ['establishments', 'profiles', 'projects'],
   action: ''
 };
