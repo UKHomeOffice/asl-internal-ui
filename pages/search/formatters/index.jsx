@@ -11,12 +11,15 @@ import format from 'date-fns/format';
 
 const DATE_FORMAT = 'D MMM YYYY';
 
+// markdown bolding breaks if there's a space before the closing markers
+const markdownSafe = highlight => highlight && highlight.replace(' **', '** ');
+
 export default {
   establishments: {
     name: {
       format: (name, establishment) => {
         const highlight = get(establishment, `highlight.name[0]`);
-        const label = highlight ? <Markdown>{highlight}</Markdown> : name;
+        const label = highlight ? <Markdown>{markdownSafe(highlight)}</Markdown> : name;
         return <Link page="establishment.dashboard" establishmentId={establishment.id} label={label} />;
       }
     },
@@ -54,7 +57,9 @@ export default {
         const name = get(profile, `highlight.name[0]`); // partial match on name
         const firstName = get(profile, `highlight.firstName[0]`, profile.firstName);
         const lastName = get(profile, `highlight.lastName[0]`, profile.lastName);
-        const label = name ? <Markdown>{name}</Markdown> : <Markdown>{`${firstName} ${lastName}`}</Markdown>;
+        const label = name
+          ? <Markdown>{markdownSafe(name)}</Markdown>
+          : <Markdown>{markdownSafe(`${firstName} ${lastName}`)}</Markdown>;
         return <Link page="globalProfile" profileId={profile.id} label={label} />;
       }
     },
@@ -87,7 +92,7 @@ export default {
     title: {
       format: (title, project) => {
         const highlight = get(project, 'highlight.title[0]');
-        const label = highlight ? <Markdown>{highlight}</Markdown> : projectTitle(project);
+        const label = highlight ? <Markdown>{markdownSafe(highlight)}</Markdown> : projectTitle(project);
         return (
           <Fragment>
             <Link page="project.read" establishmentId={project.establishment.id} projectId={project.id} label={label} />
@@ -105,7 +110,7 @@ export default {
     establishment: {
       format: (establishment, project) => {
         const highlight = get(project, `highlight['establishment.name'][0]`);
-        const label = highlight ? <Markdown>{highlight}</Markdown> : establishment.name;
+        const label = highlight ? <Markdown>{markdownSafe(highlight)}</Markdown> : establishment.name;
         return <Link page="establishment.dashboard" establishmentId={establishment.id} label={label} />;
       }
     },
@@ -114,7 +119,7 @@ export default {
       format: (profile, project) => {
         const firstName = get(project, `highlight['licenceHolder.firstName'][0]`, profile.firstName);
         const lastName = get(project, `highlight['licenceHolder.lastName'][0]`, profile.lastName);
-        const label = <Markdown>{`${firstName} ${lastName}`}</Markdown>;
+        const label = <Markdown>{markdownSafe(`${firstName} ${lastName}`)}</Markdown>;
         return <Link page="globalProfile" profileId={profile.id} label={label} />;
       }
     },
