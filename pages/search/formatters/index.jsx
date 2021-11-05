@@ -12,7 +12,7 @@ import format from 'date-fns/format';
 const DATE_FORMAT = 'D MMM YYYY';
 
 // markdown bolding breaks if there's a space before the closing markers
-const markdownSafe = highlight => highlight && highlight.replace(' **', '** ');
+const markdownSafe = highlight => highlight && highlight.replace(/ \*\*/g, '** ');
 
 export default {
   establishments: {
