@@ -16,7 +16,8 @@
     "build:js": "node --max_old_space_size=4096 node_modules/.bin/webpack",
     "prebuild:css": "mkdir -p ./public/css",
     "build:css": "node-sass ./assets/sass/app.scss -o ./public/css --importer ./node_modules/npm-sass/lib/importer",
-    "postinstall": "npm run build"
+    "postinstall": "npm run build",
+    "test:audit": "audit-ci --high --skip-dev --config .auditrc.json"
   },
   "repository": {
     "type": "git",
@@ -65,14 +66,15 @@
     "uuid-validate": "0.0.3"
   },
   "devDependencies": {
+    "audit-ci": "^5.1.2",
     "dotenv": "^5.0.1",
-    "eslint": "^4.19.1",
+    "eslint": "^8.7.0",
     "eslint-config-lennym": "^2.3.1",
-    "node-sass": "^6.0.1",
+    "node-sass": "^7.0.1",
     "nodemon": "^2.0.6",
     "npm-run-all": "^4.1.5",
     "npm-sass": "^3.0.0",
-    "webpack": "^4.41.0",
-    "webpack-cli": "^3.3.9"
+    "webpack": "^4.46.0",
+    "webpack-cli": "^4.9.1"
   }
 }

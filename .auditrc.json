@@ -1,0 +1,8 @@
+{
+  "comments": {
+    "1006899": "node-fetch vulnerability in a version of backpack-transpiled where we do not use any component which does a fetch",
+  },
+  "allowlist": [
+    "1006899|backpack-transpiled>*"
+  ]
+}
