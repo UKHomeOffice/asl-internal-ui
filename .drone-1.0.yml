@@ -89,8 +89,3 @@ services:
   image: docker:dind
   environment:
     DOCKER_TLS_CERTDIR: ""
-- name: anchore-submission-server
-  image: 340268328991.dkr.ecr.eu-west-2.amazonaws.com/acp/anchore-submission:latest
-  pull: always
-  commands:
-    - /run.sh server
