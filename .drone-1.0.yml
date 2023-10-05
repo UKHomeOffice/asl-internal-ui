@@ -50,7 +50,7 @@ steps:
     commands:
       - docker build --secret id=github_token,env=GITHUB_AUTH_TOKEN --secret id=token,env=ART_AUTH_TOKEN -t asl-internal-ui .
   - name: scan-image
-    image: 340268328991.dkr.ecr.eu-west-2.amazonaws.com/acp/anchore-submission:latest
+    image: 340268328991.dkr.ecr.eu-west-2.amazonaws.com/acp/trivy/client:latest
     pull: always
     environment:
       IMAGE_NAME: asl-internal-ui
