@@ -18,10 +18,18 @@ export default {
       const highlight = get(result, `highlight.licenceNumber[0]`);
       const licenceNumber = highlight ? <Markdown>{highlight}</Markdown> : get(result, 'licenceNumber');
 
-      if (model === 'pil' || model === 'trainingPil') {
+      if (model === 'pil') {
         return (
           <Fragment>
             <span>PIL</span>
+            <span className="block smaller">{licenceNumber}</span>
+          </Fragment>
+        );
+      }
+      if (model === 'trainingPil') {
+        return (
+          <Fragment>
+            <span>PIL-E</span>
             <span className="block smaller">{licenceNumber}</span>
           </Fragment>
         );
@@ -50,10 +58,6 @@ export default {
       const status = get(result, 'modelStatus');
       let model = get(result, 'model');
 
-      if (model === 'trainingPil') {
-        model = 'pil';
-      }
-
       if (type === 'grant' && status === 'active') {
         type = 'update';
       }
@@ -69,6 +73,7 @@ export default {
         case 'establishment':
         case 'project':
         case 'pil':
+        case 'trainingPil':
         case 'role':
         case 'profile':
           const subject = get(result, 'subject');
@@ -94,7 +99,7 @@ export default {
             page="task.read"
             taskId={taskId}
             // adding optional snippet for backwards compatibility
-            // as some task types wont have content defined.
+            // as some task types won't have content defined.
             label={<Snippet optional>{`tasks.${model}.${type}`}</Snippet>}
           />
           {
