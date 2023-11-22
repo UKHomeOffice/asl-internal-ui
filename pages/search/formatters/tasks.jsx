@@ -3,6 +3,16 @@ import get from 'lodash/get';
 import { Link, Markdown, Snippet } from '@ukhomeoffice/asl-components';
 import taskFormatters from '@asl/pages/pages/task/list/formatters';
 
+const LicenceLabelWithNumber = ({label, result}) => {
+  const highlight = get(result, `highlight.licenceNumber[0]`);
+  const licenceNumber = highlight ? <Markdown>{highlight}</Markdown> : get(result, 'licenceNumber');
+
+  return <Fragment>
+    <span>{label}</span>
+    <span className="block smaller">{licenceNumber}</span>
+  </Fragment>
+}
+
 export default {
   updatedAt: taskFormatters.updatedAt,
 
@@ -15,40 +25,21 @@ export default {
 
   licence: {
     format: (model, result) => {
-      const highlight = get(result, `highlight.licenceNumber[0]`);
-      const licenceNumber = highlight ? <Markdown>{highlight}</Markdown> : get(result, 'licenceNumber');
-
-      if (model === 'pil') {
-        return (
-          <Fragment>
-            <span>PIL</span>
-            <span className="block smaller">{licenceNumber}</span>
-          </Fragment>
-        );
+      switch (model) {
+        case 'pil':
+          return <LicenceLabelWithNumber label="PIL" result={result} />
+        case 'trainingPil':
+          return <LicenceLabelWithNumber label="PIL-E" result={result} />
+        case 'project':
+          return <LicenceLabelWithNumber label="PPL" result={result} />
+        case 'rop':
+          return 'PPL';
+        case 'place':
+        case 'role':
+        case 'establishment':
+          return 'PEL';
+        default: return '-';
       }
-      if (model === 'trainingPil') {
-        return (
-          <Fragment>
-            <span>PIL-E</span>
-            <span className="block smaller">{licenceNumber}</span>
-          </Fragment>
-        );
-      }
-      if (model === 'project') {
-        return (
-          <Fragment>
-            <span>PPL</span>
-            <span className="block smaller">{licenceNumber}</span>
-          </Fragment>
-        );
-      }
-      if (model === 'rop') {
-        return 'PPL';
-      }
-      if (model === 'place' || model === 'role' || model === 'establishment') {
-        return 'PEL';
-      }
-      return '-';
     }
   },
 
