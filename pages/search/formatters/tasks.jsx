@@ -10,8 +10,8 @@ const LicenceLabelWithNumber = ({label, result}) => {
   return <Fragment>
     <span>{label}</span>
     <span className="block smaller">{licenceNumber}</span>
-  </Fragment>
-}
+  </Fragment>;
+};
 
 export default {
   updatedAt: taskFormatters.updatedAt,
@@ -27,11 +27,11 @@ export default {
     format: (model, result) => {
       switch (model) {
         case 'pil':
-          return <LicenceLabelWithNumber label="PIL" result={result} />
+          return <LicenceLabelWithNumber label="PIL" result={result} />;
         case 'trainingPil':
-          return <LicenceLabelWithNumber label="PIL-E" result={result} />
+          return <LicenceLabelWithNumber label="PIL-E" result={result} />;
         case 'project':
-          return <LicenceLabelWithNumber label="PPL" result={result} />
+          return <LicenceLabelWithNumber label="PPL" result={result} />;
         case 'rop':
           return 'PPL';
         case 'place':
@@ -49,9 +49,7 @@ export default {
       const status = get(result, 'modelStatus');
       let model = get(result, 'model');
 
-      if (type === 'grant' && status === 'active') {
-        type = 'update';
-      }
+      const normalisedType = type === 'grant' && status === 'active' ? 'update' : type;
 
       let contextLabel = null;
       let title = null;
@@ -91,7 +89,7 @@ export default {
             taskId={taskId}
             // adding optional snippet for backwards compatibility
             // as some task types won't have content defined.
-            label={<Snippet optional>{`tasks.${model}.${type}`}</Snippet>}
+            label={<Snippet optional>{`tasks.${model}.${normalisedType}`}</Snippet>}
           />
           {
             contextLabel && <span className="block smaller">{contextLabel}</span>
