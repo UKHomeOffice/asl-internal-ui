@@ -81,6 +81,7 @@
     "webpack-cli": "^4.9.2"
   },
   "overrides": {
-    "node-fetch": "^2.6.11"
+    "node-fetch": "^2.6.11",
+    "d3-color": "^3.1.0"
   }
 }
