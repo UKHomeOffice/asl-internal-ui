@@ -13,6 +13,14 @@ const defaults = {
   content: ''
 };
 
+function getConditionLabel(isRA, isCustom, condition, defaultCondition) {
+  if (isRA) { return 'Retrospective Assessment'; }
+  if (isCustom) { return 'CUSTOM'; }
+  if (condition.title && condition.title !== 'none') { return condition.title; }
+
+  return defaultCondition.title;
+}
+
 const getCondition = condition => {
 
   if (!condition.key) {
@@ -30,7 +38,7 @@ const getCondition = condition => {
 
   return {
     ...omit(condition, 'key', 'path', 'autoAdded'),
-    condition: isRA ? 'Retrospective Assessment' : (isCustom ? 'CUSTOM' : defaultCondition.title),
+    condition: getConditionLabel(isRA, isCustom, condition, defaultCondition),
     requires_editing: requiresEditing ? 'true' : 'false',
     content: isRA ? RA.required : (condition.content || condition.edited || defaultCondition.content)
   };
