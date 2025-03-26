@@ -25,7 +25,7 @@ module.exports = () => {
     return req.api(`/establishment/${req.body.establishmentId}/removepil`, params)
       .then(({ json: { data } }) => {
         return res.redirect(req.buildRoute('globalProfile', { profileId: req.profileId }));
-      })
+      });
   });
 
   return app;

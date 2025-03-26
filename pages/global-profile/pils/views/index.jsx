@@ -145,7 +145,7 @@ const formatters = {
 const PIL = (pil) => {
   const licenceNumber = useSelector(state => state.model.pilLicenceNumber);
   const pils = useSelector(state => state.model.pils);
-  const activePil = pils.filter((item) => item.status === "active" );
+  const activePil = pils.filter((item) => item.status === 'active');
 
   return <section className="profile-section">
     <ModelSummary
@@ -154,8 +154,8 @@ const PIL = (pil) => {
       schema={pilSchema}
     />
 
-    { 
-      activePil.length > 0 && pil.status === 'pending' && 
+    {
+      activePil.length > 0 && pil.status === 'pending' &&
       <form method="post">
         <input type="hidden" name="establishmentId" value={pil.establishmentId} />
         <input type="hidden" name="pilId" value={pil.id} />
@@ -169,7 +169,7 @@ const confirmPilRemoval = (event) => {
   if (!window.confirm('Are you sure you wish to remove this item?')) {
     event.preventDefault();
   }
-}
+};
 
 const TrainingPIL = (pil) => {
   return <section className="profile-section">
