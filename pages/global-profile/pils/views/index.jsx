@@ -146,6 +146,13 @@ const PIL = (pil) => {
   const licenceNumber = useSelector(state => state.model.pilLicenceNumber);
   const pils = useSelector(state => state.model.pils);
   const activePil = pils.filter((item) => item.status === 'active');
+  const establishments = useSelector(state => state.model.establishments);
+
+  //finding the user establishment, for the pil issued
+  let activePilEstablishment = [];
+  if (activePil.length > 0 && establishments.length > 0) {
+    activePilEstablishment = establishments.filter((item) => item.id === activePil[0].establishmentId);
+  }
 
   return <section className="profile-section">
     <ModelSummary
@@ -160,6 +167,15 @@ const PIL = (pil) => {
         <input type="hidden" name="establishmentId" value={pil.establishmentId} />
         <input type="hidden" name="pilId" value={pil.id} />
         <button className="govuk-button" onClick={confirmPilRemoval}>Remove</button>
+      </form>
+    }
+
+    {
+      activePil.length > 0 && activePilEstablishment.length === 0 && pil.status === 'active' &&
+      <form method="post">
+        <input type="hidden" name="establishmentId" value={pil.establishmentId} />
+        <input type="hidden" name="pilId" value={pil.id} />
+        <button className="govuk-button button-warning" onClick={confirmPilRemoval}>Revoke license</button>
       </form>
     }
   </section>;
