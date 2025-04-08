@@ -154,6 +154,14 @@ const PIL = (pil) => {
     activePilEstablishment = establishments.filter((item) => item.id === activePil[0].establishmentId);
   }
 
+  //determining the action
+  let action = '';
+  if (activePil.length > 0 && pil.status === 'pending') {
+    action = 'remove';
+  } else if (activePil.length > 0 && activePilEstablishment.length === 0 && pil.status === 'active') {
+    action = 'revoke';
+  }
+
   return <section className="profile-section">
     <ModelSummary
       model={{ ...pil, licenceNumber: pil.licenceNumber || licenceNumber }}
@@ -162,27 +170,19 @@ const PIL = (pil) => {
     />
 
     {
-      activePil.length > 0 && pil.status === 'pending' &&
+      action &&
       <form method="post">
         <input type="hidden" name="establishmentId" value={pil.establishmentId} />
         <input type="hidden" name="pilId" value={pil.id} />
-        <button className="govuk-button" onClick={confirmPilRemoval}>Remove</button>
-      </form>
-    }
-
-    {
-      activePil.length > 0 && activePilEstablishment.length === 0 && pil.status === 'active' &&
-      <form method="post">
-        <input type="hidden" name="establishmentId" value={pil.establishmentId} />
-        <input type="hidden" name="pilId" value={pil.id} />
-        <button className="govuk-button button-warning" onClick={confirmPilRemoval}>Revoke license</button>
+        <input type="hidden" name="action" value={action} />
+        <button className="govuk-button button-warning" onClick={(e) => confirmPilAction(action, e)}>{action[0].toUpperCase()}{action.substring(1)} licence</button>
       </form>
     }
   </section>;
 };
 
-const confirmPilRemoval = (event) => {
-  if (!window.confirm('Are you sure you wish to remove this item?')) {
+const confirmPilAction = (action, event) => {
+  if (!window.confirm('Are you sure you wish to ' + action + ' this item?')) {
     event.preventDefault();
   }
 };
