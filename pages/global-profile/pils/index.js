@@ -1,5 +1,4 @@
 const { page } = require('@asl/service/ui');
-const { BadRequestError } = require('@asl/service/errors');
 
 module.exports = () => {
   const app = page({ root: __dirname });
